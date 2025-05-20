@@ -1,9 +1,9 @@
 <template>
 <div class="add-task">
     <input
-    v-model="newTask"
-    @keyup.enter="submit"
-    placeholder="Add a task"
+        v-model="newTask"
+        @keyup.enter="submit"
+        placeholder="Add a task"
     />
     <button @click="submit">追加</button>
 </div>
@@ -17,6 +17,7 @@
 
     const submit = () => {
         const text = newTask.value.trim()
+        /** 有効な文字列がある場合に追加 */
         if (text) {
             emit('add-task', text)
             newTask.value = ''

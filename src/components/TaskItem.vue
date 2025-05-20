@@ -25,7 +25,7 @@
     <!-- 編集ボタン -->
     <EditIcon v-if="!task.editing" @click="startEdit" />
 
-    <!-- 削除ボタン（編集モード中は非表示）-->
+    <!-- 削除ボタン -->
     <DeleteIcon v-if="!task.editing" @click="$emit('delete')" />
 </li>
 </template>
@@ -40,8 +40,10 @@ const props = defineProps({
 })
 
 const editInput = ref(null)
+/** キャンセル用に編集前のテキストを保持 */
 const originalText = ref('')
 
+/** 編集モードに切り替える */ 
 const startEdit = () => {
     originalText.value = props.task.text
     props.task.editing = true
@@ -50,11 +52,12 @@ const startEdit = () => {
     })
 }
 
+/** 編集を終了する（Enter or フォーカスアウト） */
 const stopEdit = () => {
     const trimmed = props.task.text.trim()
 
     if (trimmed === '') {
-        // 空白だけなら元に戻す
+        /** 空白の場合は編集をキャンセルして元に戻す */
         props.task.text = originalText.value
     }
 
